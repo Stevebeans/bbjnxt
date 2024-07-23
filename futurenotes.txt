@@ -1,0 +1,1 @@
+Spoiler Bar doesn't seem to refresh when changed due to disk cache.  If it doesn't change when pushed live, need to fix and set some cache buster

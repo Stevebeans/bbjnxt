@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AuthContext from "@/utils/AuthContext";
 
-const dashboard = () => {
-  const { user } = React.useContext(AuthContext);
+const Dashboard = () => {
+  const { user } = useContext(AuthContext);
 
   return (
     <ProtectedRoute>
@@ -12,4 +12,4 @@ const dashboard = () => {
   );
 };
 
-export default dashboard;
+export default Dashboard;

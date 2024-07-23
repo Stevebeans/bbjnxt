@@ -2,6 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+}
+
+@layer components {
+  body {
+    @apply bg-slate-100 dark:bg-gray-900 text-gray-900 dark:text-white;
+  }
+
+  .active {
+    @apply border-b-2 border-secondary500 text-secondary500 font-semibold;
+  }
+
+  .inactive {
+    @apply text-white;
+  }
+
+  .btn {
+    @apply px-2 py-1 rounded-md bg-primary500  text-white w-fit hover:bg-primary600 hover:text-secondary400 hover:shadow-md flex items-center justify-center;
+  }
+
+  .btn-off {
+    @apply px-2 py-1 rounded-md bg-secondary500 text-white w-fit hover:bg-gray-600 hover:text-secondary400 hover:shadow-md flex items-center justify-center;
+  }
+
+  .btn-cancel {
+    @apply px-2 py-1 rounded-md bg-red-500 text-white w-fit hover:bg-red-600 hover:text-secondary400 hover:shadow-md flex items-center justify-center;
+  }
+}
+
 .winner img,
 .hoh img {
   @apply border-2 border-green-600;

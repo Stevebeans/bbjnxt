@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { fetcher } from "@/utils/fetcher";
 import Spinner from "@/components/utils/Spinner";
 import SpoilerBarCard from "@/components/cards/SpoilerBarCard";
+import NavMenu from "./NavMenu";
 
 //import SpoilerBarCard from "./SpoilerBarCard";
 
@@ -20,7 +21,14 @@ const SpoilerBar = () => {
 
   const FETCH_URL = process.env.NEXT_PUBLIC_API_URL_BBJ;
 
-  const { data, error } = useSWR(`${FETCH_URL}/next_spoiler_bar`, fetcher, { refreshInterval: 1000 });
+  //console.log("FETCH_URL", FETCH_URL + "/next_spoiler_bar");
+
+  const { data, error, isValidating } = useSWR(`${FETCH_URL}/next_spoiler_bar`, fetcher, {
+    refreshInterval: 10000,
+    revalidateOnFocus: true,
+    revalidateOnReconnect: true,
+    dedupingInterval: 500
+  });
 
   useEffect(() => {
     if (data) {
@@ -32,21 +40,26 @@ const SpoilerBar = () => {
   if (error) return <div>Failed to load</div>;
 
   return (
-    <div className="">
-      <div className="w-full bg-primary500 flex justify-end items-center text-xs text-white">
-        Show Spoiler Bar:
-        <button onClick={() => setShowBar(!showBar)} className="py-0.5 px-2 text-white">
-          {showBar ? <FaToggleOn size={20} /> : <FaToggleOff size={20} />}
-        </button>
+    <React.Fragment>
+      <div className="flex justify-between w-full bg-primary500 py-1 px-2 border-t border-b border-primary700">
+        <div className="hidden md:flex">
+          <NavMenu classInfo="flex" />
+        </div>
+        <div className="flex justify-end items-center text-xs text-white">
+          Show Spoiler Bar:
+          <button onClick={() => setShowBar(!showBar)} className="py-0.5 px-2 text-white">
+            {showBar ? <FaToggleOn size={20} /> : <FaToggleOff size={20} />}
+          </button>
+        </div>
       </div>
 
       <div className="w-full justify-center flex mb-2 z-10">
-        <div className="mx-auto w-[95%] lg:w-[1000px]">
+        <div className="mx-auto w-[95%] lg:w-[1000px] bg-white">
           {showBar && <div className="mx-auto w-full max-w-[1200px] justify-center p-1 shadow-md flex flex-wrap">{loadingPlayers ? <Spinner text={"players"} /> : players.length > 0 && players.map(player => <SpoilerBarCard key={player.player_id} player={player} />)}</div>}
           <div className="z-20 mx-auto flex h-1.5 w-full max-w-7xl  bg-gradient-to-b from-yellow-100 via-yellow-300 to-yellow-400 shadow "></div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 };
 

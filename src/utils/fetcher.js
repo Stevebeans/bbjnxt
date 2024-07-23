@@ -1,3 +1,3 @@
 // src/utils/fetcher.js
 
-export const fetcher = url => fetch(url).then(res => res.json());
+export const fetcher = (...args) => fetch(...args).then(res => res.json());

@@ -14,11 +14,16 @@ const SpoilerBarCard = ({ player }) => {
     evic: "Evicted"
   };
 
-  const statusColor = player.status[0];
+  // if player.status is not null or undefined, then we can use it
 
-  player.link;
+  const status = player.status ? player.status : [""];
 
-  const statusDisplay = player.status
+  const statusColor = player.status ? player.status[0] : "";
+
+  // console.log("player");
+  // console.log(player);
+
+  const statusDisplay = status
     .map(place => {
       return nameMap[place] || place; // Look up place in nameMap or use the original place if not found
     })
