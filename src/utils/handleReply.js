@@ -10,6 +10,7 @@ export const handleReply = async ({ comment, user, replyContent, setLoading, set
   const comment_ID = comment.comment_ID;
   const user_ID = user.data.user.id;
   const comment_content = replyContent;
+
   const parent_ID = comment_ID;
 
   if (!user) {

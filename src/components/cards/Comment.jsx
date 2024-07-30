@@ -10,7 +10,7 @@ import parse from "html-react-parser";
 import AuthContext from "@/utils/AuthContext";
 import { FaReply, FaAngleUp, FaAngleDown } from "react-icons/fa";
 import MyModal from "@/components/utils/Modal";
-import { handleReply } from "@/components/utils/handlereply";
+import { handleReply } from "@/utils/handlereply";
 import Alert from "@mui/material/Alert";
 
 const CommentCard = ({ comment, depth = 0 }) => {
