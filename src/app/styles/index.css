@@ -3,13 +3,16 @@
 @tailwind utilities;
 
 @layer base {
-}
-
-@layer components {
   body {
     @apply bg-slate-100 dark:bg-gray-900 text-gray-900 dark:text-white;
   }
 
+  textarea {
+    @apply block p-2.5 w-full text-sm text-gray-900  rounded-lg  focus:outline-none;
+  }
+}
+
+@layer components {
   .active {
     @apply border-b-2 border-secondary500 text-secondary500 font-semibold;
   }
@@ -28,6 +31,10 @@
 
   .btn-cancel {
     @apply px-2 py-1 rounded-md bg-red-500 text-white w-fit hover:bg-red-600 hover:text-secondary400 hover:shadow-md flex items-center justify-center;
+  }
+
+  .badge {
+    @apply ml-2 border py-0.5 px-1 rounded-md h-fit;
   }
 }
 

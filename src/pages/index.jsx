@@ -31,13 +31,15 @@ const HomePage = ({ postsData, feedUpdatesData }) => {
 };
 
 export const getStaticProps = async () => {
-  const POST_URL = process.env.NEXT_PUBLIC_API_URL + "/blog_posts?per_page=10";
-  const FEED_URL = process.env.NEXT_PUBLIC_API_URL + "/feed_updates?per_page=20";
+  const POST_URL = process.env.NEXT_PUBLIC_API_URL_BBJ + "/blog_posts?per_page=10";
+  const FEED_URL = process.env.NEXT_PUBLIC_API_URL_BBJ + "/feed_updates?per_page=20";
 
-  const posts = await fetch(POST_URL);
+  console.log("POST_URL", POST_URL);
+
+  const posts = await fetch(POST_URL, { cache: "no-store" });
   const postsData = await posts.json();
 
-  const feedUpdates = await fetch(FEED_URL);
+  const feedUpdates = await fetch(FEED_URL, { cache: "no-store" });
   const feedUpdatesData = await feedUpdates.json();
 
   return {

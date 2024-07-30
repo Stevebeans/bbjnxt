@@ -2,27 +2,31 @@ import React from "react";
 import { useRouter } from "next/router";
 import BlogPost from "@/components/BlogPost";
 
-const PageOrPost = ({ data, type }) => {
+
+
+const PageOrPost = ({ data, type, comments }) => {
   const router = useRouter();
+
+  const comment_count = data ? data.comment_count : 0;
 
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
   if (type === "post") {
-    return <BlogPost content={data} />;
+    return <BlogPost content={data} comments={comments} comment_count={comment_count} />;
   }
 
   // Add fallback rendering for page type
   if (type === "page") {
-    return <div dangerouslySetInnerHTML={{ __html: data.content.rendered }} />;
+    return "PAGE";
   }
 
   return <div>Type not recognized</div>;
 };
 
 export async function getStaticPaths() {
-  const DOMAIN = process.env.NEXT_PUBLIC_API_DOMAIN;
+  const DOMAIN = process.env.NEXT_PUBLIC_API_URL_BBJ;
 
   try {
     const postsRes = await fetch(`${DOMAIN}/wp-json/bbj/v1/single_posts`);
@@ -53,34 +57,35 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const DOMAIN = process.env.NEXT_PUBLIC_API_DOMAIN;
+  const DOMAIN = process.env.NEXT_PUBLIC_API_URL_BBJ;
+  const PAGE_URL = `${DOMAIN}/single_page?slug=${params.slug}`;
 
   try {
-    const postRes = await fetch(`${DOMAIN}/wp-json/bbj/v1/single_posts?slug=${params.slug}`);
-    const pageRes = await fetch(`${DOMAIN}/wp-json/wp/v2/pages?slug=${params.slug}`);
+    const res = await fetch(PAGE_URL);
+    const data = (await res.json())[0] || null;
 
-    if (!postRes.ok && !pageRes.ok) {
+    if (!res.ok || !data) {
       return {
         notFound: true
       };
     }
 
-    const postData = (await postRes.json())[0] || null;
-    const pageData = (await pageRes.json())[0] || null;
+    const post_ID = data.ID || null;
+    let comments = [];
 
-    const data = postData || pageData;
-    const type = postData ? "post" : "page";
-
-    if (!data) {
-      return {
-        notFound: true
-      };
+    if (post_ID) {
+      const COMMENT_API = `${DOMAIN}/bbj_comments?post_id=${post_ID}&per_page=40`;
+      const commentRes = await fetch(COMMENT_API);
+      comments = commentRes.ok ? await commentRes.json() : [];
     }
+
+    const type = data.next_post_type === "post" ? "post" : "page";
 
     return {
       props: {
         data,
-        type
+        type,
+        comments
       },
       revalidate: 10
     };
