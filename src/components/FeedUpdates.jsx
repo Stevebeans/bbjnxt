@@ -1,6 +1,6 @@
 import React from "react";
 import SubHeader from "@/components/utils/SubHeader";
-import FeedUpdate from "./cards/FeedUpdates";
+import FeedUpdate from "@/components/cards/FeedUpdates";
 
 const FeedUpdates = ({ feed_updates }) => {
   return (

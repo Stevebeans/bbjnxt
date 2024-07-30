@@ -2,10 +2,10 @@ import React, { useRef, Suspense } from "react";
 import Image from "next/image";
 import { commentConversion } from "@/utils/commentFormat";
 import Link from "next/link";
-import BeansTimeAgo from "./utils/TimeAgo";
-import PageHeader from "./utils/PageHeader";
+import BeansTimeAgo from "@/components/utils/TimeAgo";
+import PageHeader from "@/components/utils/PageHeader";
 import parse from "html-react-parser";
-import Comments from "./Comments";
+import Comments from "@/components/Comments";
 import { FaArrowDown } from "react-icons/fa";
 
 const BlogPost = ({ content, comments, comment_count }) => {

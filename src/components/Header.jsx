@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import SpoilerBar from "./SpoilerBar";
+import SpoilerBar from "@/components/SpoilerBar";
 import Link from "next/link";
 import AuthContext from "@/utils/AuthContext";
 import Image from "next/image";

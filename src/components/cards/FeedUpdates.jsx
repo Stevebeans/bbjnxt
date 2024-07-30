@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import BeansTimeAgo from "@/components/utils/TimeAgo";
-import VotingBox from "../VotingBox";
+import VotingBox from "@/components/VotingBox";
 
 const FeedUpdate = ({ update }) => {
   const date = new Date(update.post_modified);

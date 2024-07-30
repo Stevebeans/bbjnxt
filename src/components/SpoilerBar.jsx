@@ -6,9 +6,7 @@ import useSWR from "swr";
 import { fetcher } from "@/utils/fetcher";
 import Spinner from "@/components/utils/Spinner";
 import SpoilerBarCard from "@/components/cards/SpoilerBarCard";
-import NavMenu from "./NavMenu";
-
-//import SpoilerBarCard from "./SpoilerBarCard";
+import NavMenu from "@/components/NavMenu";
 
 // get static props
 

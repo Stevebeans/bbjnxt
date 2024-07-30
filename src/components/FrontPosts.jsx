@@ -1,5 +1,5 @@
 import React from "react";
-import SubHeader from "./utils/Divider";
+import SubHeader from "@/components/utils/Divider";
 import FrontPostCard from "@/components/cards/FrontPostCard";
 import { FaChevronRight } from "react-icons/fa6";
 

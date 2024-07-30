@@ -4,13 +4,13 @@ import React, { useContext, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import BeansTimeAgo from "../utils/TimeAgo";
+import BeansTimeAgo from "@/components/utils/TimeAgo";
 import { rankCalc, rankColors } from "@/utils/rankCalc";
 import parse from "html-react-parser";
 import AuthContext from "@/utils/AuthContext";
 import { FaReply, FaAngleUp, FaAngleDown } from "react-icons/fa";
-import MyModal from "../utils/Modal";
-import { handleReply } from "@/components/utils/handleReply";
+import MyModal from "@/components/utils/Modal";
+import { handleReply } from "@/components/utils/handlereply";
 import Alert from "@mui/material/Alert";
 
 const CommentCard = ({ comment, depth = 0 }) => {

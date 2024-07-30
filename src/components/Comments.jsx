@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState, useContext } from "react";
-import SubHeader from "./utils/SubHeader";
+import SubHeader from "@/components/utils/SubHeader";
 import AuthContext from "@/utils/AuthContext";
 import { redirectToLogin } from "@/utils/navigation";
 import { useRouter } from "next/router";
-import CommentCard from "./cards/Comment";
+import CommentCard from "@/components/cards/Comment";
 
 const Comments = ({ comments, comment_count }) => {
   const [sortOrder, setSortOrder] = useState("newest");

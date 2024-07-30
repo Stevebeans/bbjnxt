@@ -1,6 +1,6 @@
 import React from "react";
-import SideBar from "./Sidebar";
-import Header from "./Header";
+import SideBar from "@/components/Sidebar";
+import Header from "@/components/Header";
 
 const Layout = ({ children }) => {
   return (
