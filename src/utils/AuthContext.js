@@ -11,6 +11,8 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
+  const AUTH_URL = process.env.NEXT_PUBLIC_API_AUTH;
+
   useEffect(() => {
     const token = Cookies.get("token");
 
@@ -29,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       console.log("Attempting to login with username:", username);
-      const response = await axios.post("https://bigbrotherjunkies.com/wp-json/jwt-auth/v1/token", {
+      const response = await axios.post(AUTH_URL, {
         username,
         password
       });

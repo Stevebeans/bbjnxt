@@ -2,19 +2,21 @@ import React from "react";
 import { useRouter } from "next/router";
 import BlogPost from "@/components/BlogPost";
 
-
-
 const PageOrPost = ({ data, type, comments }) => {
   const router = useRouter();
 
   const comment_count = data ? data.comment_count : 0;
 
+  console.log("data", data);
+
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
 
+  //<BlogPost content={data} comments={comments} comment_count={comment_count} />
+
   if (type === "post") {
-    return <BlogPost content={data} comments={comments} comment_count={comment_count} />;
+    return <BlogPost content={data} />;
   }
 
   // Add fallback rendering for page type
@@ -59,6 +61,8 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const DOMAIN = process.env.NEXT_PUBLIC_API_URL_BBJ;
   const PAGE_URL = `${DOMAIN}/single_page?slug=${params.slug}`;
+
+  const TEMP_DOMAIN = process.env.NEXT_PUBLIC_API_DOMAIN;
 
   try {
     const res = await fetch(PAGE_URL);

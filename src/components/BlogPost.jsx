@@ -8,7 +8,7 @@ import parse from "html-react-parser";
 import Comments from "@/components/Comments";
 import { FaArrowDown } from "react-icons/fa";
 
-const BlogPost = ({ content, comments, comment_count }) => {
+const BlogPost = ({ content }) => {
   //console.log("content", content);
   // decode header text
 
@@ -50,7 +50,7 @@ const BlogPost = ({ content, comments, comment_count }) => {
       <div className="prose max-w-none p-4">{parse(content.post_content)}</div>
       <div ref={commentsRef}>
         <Suspense fallback={<div>Loading...</div>}>
-          <Comments comments={comments} comment_count={comment_count} />
+          <Comments content={content} />
         </Suspense>
       </div>
 
