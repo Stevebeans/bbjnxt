@@ -8,6 +8,8 @@ export const handleReply = async ({ comment, user, replyContent, setLoading, set
     return;
   }
 
+  // handleReply(e, replyContent, user, post_ID, setNewComment, comments, setCommentPosting, setIsPosting, setIsSuccess, setIsFail, setErrorMessage, isReply, parentCommentID);
+
   const POST_URL = process.env.NEXT_PUBLIC_API_V2 + "/comments";
 
   const postId = comment.post_ID;

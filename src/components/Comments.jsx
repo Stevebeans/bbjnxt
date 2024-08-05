@@ -2,37 +2,31 @@
 
 // import SubHeader from "@/components/utils/SubHeader";
 import AuthContext from "@/utils/AuthContext";
-import { redirectToLogin } from "@/utils/navigation";
 import { useRouter } from "next/router";
 import CommentCard from "@/components/cards/Comment";
-
-import { useState, useContext, use, useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import useSWR, { mutate } from "swr";
 import { fetcher } from "@/utils/fetcher";
-import { COMMENT_COUNT } from "./utils/constants";
+import { getFetchCommentsURL } from "../components/utils/constants";
 import PostComment from "./cards/PostComment";
 
 const Comments = ({ content }) => {
   const post_ID = content.ID;
-  const FETCH_URL = `${process.env.NEXT_PUBLIC_API_URL_BBJ}/bbj_comments?post_id=${post_ID}&per_page=${COMMENT_COUNT}`;
+  const FETCH_URL = getFetchCommentsURL(post_ID);
   const [comments, setComments] = useState([]);
   const [commentPosting, setCommentPosting] = useState(false);
+  const [showReply, setShowReply] = useState(false);
   const { user } = useContext(AuthContext);
   const router = useRouter();
 
-  const { data, error, mutute } = useSWR(FETCH_URL, fetcher, {
-    refreshInterval: 10000000,
+  console.log("FETCH_URL", FETCH_URL);
+
+  const { data, error, isLoading, mutate } = useSWR(FETCH_URL, fetcher, {
+    refreshInterval: 10000,
     revalidateOnFocus: true,
     revalidateOnReconnect: true,
     dedupingInterval: 500
   });
-
-  useEffect(() => {
-    if (commentPosting) {
-      mutate(FETCH_URL);
-      setCommentPosting(false);
-    }
-  }, [commentPosting]);
 
   useEffect(() => {
     if (data) {
@@ -44,14 +38,13 @@ const Comments = ({ content }) => {
     }
   }, [data, error]);
 
-  // console.log("comments", comments);
+  console.log("comments", comments);
 
   return (
     <div>
-      <PostComment user={user} setNewComment={setComments} post_ID={post_ID} comments={comments} setCommentPosting={setCommentPosting} commentPosting={commentPosting} />
-
+      <PostComment user={user} setNewComment={setComments} post_ID={post_ID} comments={comments} setCommentPosting={setCommentPosting} commentPosting={commentPosting} showReply={showReply} setShowReply={setShowReply} />
       {comments.map(comment => (
-        <CommentCard key={comment.comment_ID} comment={comment} setNewComment={setComments} />
+        <CommentCard key={comment.comment_ID} comment={comment} setNewComment={setComments} post_ID={post_ID} comments={comments} setCommentPosting={setCommentPosting} commentPosting={commentPosting} showReply={showReply} setShowReply={setShowReply} />
       ))}
     </div>
   );
