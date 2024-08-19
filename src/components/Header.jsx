@@ -3,9 +3,15 @@ import SpoilerBar from "@/components/SpoilerBar";
 import Link from "next/link";
 import AuthContext from "@/utils/AuthContext";
 import Image from "next/image";
+import SpoilerUpdateBar from "./SpoilerUpdateBar";
+import { feedUpdater } from "@/utils/userCheck";
 
 const Header = () => {
   const { user } = useContext(AuthContext);
+
+  const feedCheck = feedUpdater(user);
+
+  console.log("feed chcker", feedCheck);
 
   return (
     <div className="">
@@ -24,6 +30,7 @@ const Header = () => {
         </Link>
       </div>
       <SpoilerBar />
+      {feedCheck && <SpoilerUpdateBar />}
     </div>
   );
 };

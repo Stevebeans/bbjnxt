@@ -4,47 +4,40 @@
 import AuthContext from "@/utils/AuthContext";
 import { useRouter } from "next/router";
 import CommentCard from "@/components/cards/Comment";
+import { getFetchCommentsURL } from "@/components/utils/constants";
 import { useState, useContext, useEffect } from "react";
 import useSWR, { mutate } from "swr";
 import { fetcher } from "@/utils/fetcher";
-import { getFetchCommentsURL } from "../components/utils/constants";
+import { COMMENT_COUNT } from "./utils/constants";
 import PostComment from "./cards/PostComment";
+import Spinner from "./utils/Spinner";
 
 const Comments = ({ content }) => {
   const post_ID = content.ID;
-  const FETCH_URL = getFetchCommentsURL(post_ID);
+  const per_page = COMMENT_COUNT;
+  const FETCH_URL = getFetchCommentsURL(post_ID, per_page);
   const [comments, setComments] = useState([]);
   const [commentPosting, setCommentPosting] = useState(false);
-  const [showReply, setShowReply] = useState(false);
+  const [commentsLoading, setCommentsLoading] = useState(true);
   const { user } = useContext(AuthContext);
   const router = useRouter();
 
-  console.log("FETCH_URL", FETCH_URL);
-
-  const { data, error, isLoading, mutate } = useSWR(FETCH_URL, fetcher, {
-    refreshInterval: 10000,
-    revalidateOnFocus: true,
-    revalidateOnReconnect: true,
-    dedupingInterval: 500
-  });
+  const { data, error, mutate } = useSWR(FETCH_URL, fetcher);
 
   useEffect(() => {
+    console.log("DATA", data);
     if (data) {
-      // set comments with newest to oldest
-      setComments(data.reverse());
+      setComments(Array.isArray(data) ? data : []);
+      setCommentsLoading(false);
     }
-    if (error) {
-      console.error("Error fetching comments:", error);
-    }
-  }, [data, error]);
-
-  console.log("comments", comments);
+  }, [data]);
 
   return (
     <div>
-      <PostComment user={user} setNewComment={setComments} post_ID={post_ID} comments={comments} setCommentPosting={setCommentPosting} commentPosting={commentPosting} showReply={showReply} setShowReply={setShowReply} />
+      {commentsLoading && <Spinner />}
+      <PostComment user={user} setNewComment={setComments} post_ID={post_ID} comments={comments} setCommentPosting={setCommentPosting} commentPosting={commentPosting} />
       {comments.map(comment => (
-        <CommentCard key={comment.comment_ID} comment={comment} setNewComment={setComments} post_ID={post_ID} comments={comments} setCommentPosting={setCommentPosting} commentPosting={commentPosting} showReply={showReply} setShowReply={setShowReply} />
+        <CommentCard key={comment.comment_ID} comment={comment} setNewComment={setComments} post_ID={post_ID} comments={comments} setCommentPosting={setCommentPosting} commentPosting={commentPosting} />
       ))}
     </div>
   );

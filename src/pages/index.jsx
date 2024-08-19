@@ -23,7 +23,7 @@ const HomePage = ({ postsData, feedUpdatesData }) => {
       {/* Top Post */}
       <MainPostCard first_post={first_post} />
       <Divider />
-      <FeedUpdates feed_updates={feedUpdatesData} />
+      <FeedUpdates fallbackData={feedUpdatesData} />
       <Divider />
       <FrontPosts posts={remaining_posts} />
     </React.Fragment>
@@ -36,10 +36,10 @@ export const getStaticProps = async () => {
 
   console.log("POST_URL", POST_URL);
 
-  const posts = await fetch(POST_URL, { cache: "no-store" });
+  const posts = await fetch(POST_URL);
   const postsData = await posts.json();
 
-  const feedUpdates = await fetch(FEED_URL, { cache: "no-store" });
+  const feedUpdates = await fetch(FEED_URL);
   const feedUpdatesData = await feedUpdates.json();
 
   return {

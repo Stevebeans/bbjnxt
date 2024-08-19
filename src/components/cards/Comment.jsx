@@ -11,6 +11,7 @@ import AuthContext from "@/utils/AuthContext";
 import { useRouter } from "next/router";
 import PostComment from "./PostComment";
 import CommentVoting from "../utils/CommentVoting";
+import { redirectToLogin } from "@/utils/navigation";
 
 const CommentCard = ({ comment, depth = 0, setNewComment, post_ID, comments, setCommentPosting, commentPosting, showReply, setShowReply }) => {
   const [userVote, setUserVote] = useState(null);
@@ -70,6 +71,7 @@ const CommentCard = ({ comment, depth = 0, setNewComment, post_ID, comments, set
             <div className="font-semibold border-b border-gray-300 pb-1 mb-2 flex items-center  px-1">
               <div className="text-slate-500">{comment.comment_author}</div>
               {userRank && <div>{userRank}</div>}
+              Comment ID - {comment.comment_ID} Post ID {comment.post_ID}
             </div>
             <div className="text-gray-600 prose max-w-none">{htmlParser(comment.comment_content)}</div>
             <div className="flex items-center">
@@ -84,7 +86,7 @@ const CommentCard = ({ comment, depth = 0, setNewComment, post_ID, comments, set
                 </>
               ) : (
                 <div className="ml-4 text-xs">
-                  <a onClick={() => router.push("/login")} className="font-semibold underline hover:cursor-pointer">
+                  <a onClick={() => redirectToLogin(router)} className="font-semibold underline hover:cursor-pointer">
                     Log In to Reply
                   </a>
                 </div>

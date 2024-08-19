@@ -1,5 +1,3 @@
-// src/utils/fetcher.js
-
-import axios from "axios";
-
-export const fetcher = url => axios.get(url).then(res => res.data);
+// utils/fetcher.js
+export const fetcher = url => fetch(url).then(res => res.json());
+export const fetchNoCache = url => fetch(url, { cache: "no-cache" }).then(res => res.json());

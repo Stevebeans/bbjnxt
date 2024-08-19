@@ -13,7 +13,6 @@ const BlogPost = ({ content }) => {
   // decode header text
 
   const commentsRef = useRef(null);
-
   const scrollToComments = () => {
     if (commentsRef.current) {
       commentsRef.current.scrollIntoView({ behavior: "smooth" });
@@ -46,14 +45,12 @@ const BlogPost = ({ content }) => {
         </div>
         <div className="ml-1">{content.author_name}</div>
       </div>
-
       <div className="prose max-w-none p-4">{parse(content.post_content)}</div>
       <div ref={commentsRef}>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<div>Loading Comments...</div>}>
           <Comments content={content} />
         </Suspense>
       </div>
-
       {/* 
       <div className="p-2 border-b border-slate-400 mb-4">
         <PageHeader text={content.post_title} />

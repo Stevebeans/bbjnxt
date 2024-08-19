@@ -7,8 +7,6 @@ const PageOrPost = ({ data, type, comments }) => {
 
   const comment_count = data ? data.comment_count : 0;
 
-  //console.log("data", data);
-
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
